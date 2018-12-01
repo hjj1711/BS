@@ -41,7 +41,7 @@ class TocsvPipeline(object):
         return pipeline
 
     def spider_opened(self, spider):
-        self.file = open('output.csv', 'w+b')
+        self.file = open('./csv_file/output.csv', 'w+b')
         self.exporter = CsvItemExporter(self.file)
         self.exporter.start_exporting()
 

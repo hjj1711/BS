@@ -5,7 +5,22 @@ from trade.items import TradeItem
 class ZhishuaSpider(scrapy.Spider):
     name = 'qoutes'
     allowed_domains = ['quotes.money.163.com']
-    start_urls = ['http://quotes.money.163.com/trade/lsjysj_zhishu_000002.html?year=2018&season=1']
+    start_urls = ['http://quotes.money.163.com/trade/lsjysj_zhishu_000002.html?year=2018&season=4']
+
+
+    def start_requests(self):
+        # 定义第一个请求
+        yield scrapy.Request(self.start_urls[0], callback=self.parse)
+
+    def get_next_url(self, old_url):
+        # 传入的url格式：http://quotes.money.163.com/trade/lsjysj_zhishu_000002.html?year=2018&season=1
+        l = old_url.split('=')  # 用等号分割字符串
+        old_season = int(l[2])
+        new_season = old_season - 1
+        if new_season == 0:  # 如果tid迭代到0了，说明网站爬完，爬虫可以结束了
+            return
+        new_url = l[0] + "=" + l[1] + "=" + str(new_season)  # 构造出新的url
+        return str(new_url)  # 返回新的url
 
     def parse(self, response):
         item_nodes = response.css('.table_bg001.border_box.limit_sale tr')
@@ -24,3 +39,6 @@ class ZhishuaSpider(scrapy.Spider):
             # item['AP'] = item_node.css('td:nth-child(10)::text').extract_first()
             # item['stto'] = item_node.css('td:nth-child(11)::text').extract_first()
             yield item
+            next_url = self.get_next_url(response.url)  # 向get_next_url方法传递原URL，response.url就是原请求的url
+            if next_url != None:  # 如果返回了新的url
+                yield scrapy.Request(next_url, callback=self.parse)
