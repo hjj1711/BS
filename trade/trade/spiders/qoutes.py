@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 import scrapy
 from trade.items import TradeItem
+import numpy
+import pandas
 
 class ZhishuaSpider(scrapy.Spider):
     name = 'qoutes'
@@ -15,11 +17,34 @@ class ZhishuaSpider(scrapy.Spider):
     def get_next_url(self, old_url):
         # 传入的url格式：http://quotes.money.163.com/trade/lsjysj_zhishu_000002.html?year=2018&season=1
         l = old_url.split('=')  # 用等号分割字符串
+        lx=l[1].split('&')#对2018&season进行分割构造年份
+        old_year=int(lx[0])
         old_season = int(l[2])
+        # new_season = old_season - 1
+        # if new_season == 0:  # 如果tid迭代到0了，说明网站爬完，爬虫可以结束了
+        #     return
+
+        # if old_season !=0:
+        #     new_season = old_season - 1
+        #     new_year = old_year
+        #     if new_season==0:
+        #         new_season=old_season + 3
+        #         #print(new_season)
+        #         new_year = old_year - 1
+        #         #print(new_year)
+        #         if new_year == 2017:
+        #             return
+
         new_season = old_season - 1
-        if new_season == 0:  # 如果tid迭代到0了，说明网站爬完，爬虫可以结束了
-            return
-        new_url = l[0] + "=" + l[1] + "=" + str(new_season)  # 构造出新的url
+        new_year = old_year
+        if new_season == 0:
+            new_year=old_year-1
+            new_season=old_season+3
+            if new_year==2015:# 如果new_year迭代到2015了，说明已爬取到2016年的数据，爬虫可以结束了
+                return
+
+        new_url = l[0] + "=" + str(new_year)+"&season" + "=" + str(new_season)  # 构造出新的url
+        #new_url = l[0] + "=" + l[1] + "=" + str(new_season)  # 构造出新的url
         return str(new_url)  # 返回新的url
 
     def parse(self, response):
