@@ -1,9 +1,0 @@
-2018/11/30
-问题1：爬取的数据有空白数据
-问题1解决方案：在pipeline中添加去空语句，只让不为空的数据进行存储语句如下：
-        if item['date']:
-            self.exporter.export_item(item)
-
-
-问题2：保存CSV文件时数据之间有空行
-问题2解决方案：修改scrapy的库文件“exporters.py”，在“CsvItemExporter”中添加语句：newline=''用来去除空行

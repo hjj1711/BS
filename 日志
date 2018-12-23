@@ -1,0 +1,23 @@
+2018/11/30
+开始创建trade项目
+
+问题1：爬取的数据有空白数据
+问题1解决方案：在pipeline中添加去空语句，只让不为空的数据进行存储语句如下：
+        if item['date']:
+            self.exporter.export_item(item)
+
+
+问题2：保存CSV文件时数据之间有空行
+问题2解决方案：修改scrapy的库文件“exporters.py”，在“CsvItemExporter”中添加语句：newline=''用来去除空行
+
+2018/12/12
+完成代理ip池，User-Agent的搭建
+
+2018/12/13
+1、在CentOS服务器的usr目录下创建了scrapy-env虚拟环境
+2、完成了分布式爬虫，但分布存储时重复率过高
+
+2018/12/14
+完成分布式爬取，解决重复率的问题
+
+
