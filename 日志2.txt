@@ -1,0 +1,71 @@
+2018/11/30
+开始创建trade项目
+
+问题1：爬取的数据有空白数据
+问题1解决方案：在pipeline中添加去空语句，只让不为空的数据进行存储语句如下：
+        if item['date']:
+            self.exporter.export_item(item)
+
+
+问题2：保存CSV文件时数据之间有空行
+问题2解决方案：修改scrapy的库文件“exporters.py”，在“CsvItemExporter”中添加语句：newline=''用来去除空行
+
+2018/12/12
+  完成代理ip池，User-Agent的搭建
+
+2018/12/13
+  1、在CentOS服务器的usr目录下创建了scrapy-env虚拟环境
+  2、完成了分布式爬虫，但分布存储时重复率过高
+
+2018/12/14
+  完成分布式爬取，解决重复率的问题
+
+2019/2/18
+  重新将爬虫部署至服务器，但遇到”scrapy.contrib.exporter“的问题，故将其注释
+等待修改
+
+2019/3/6
+1.关于redis的安全问题
+  本人的reids密码设置的简单因此被多次攻击为安全起见在不使用redis
+时将其关闭，启动时需要设置密码，命令：config set requirepass 123456
+2.解决2019/2/18问题
+  本机使用的scrapy版本为1.5.1而阿里云服务器的版本为1.6.0，这两个版本的区别的其中之一为1.6.0
+版本无contrib包，因此在保存csv文件时用语句：from scrapy.contrib.exporter import CsvItemExporter
+无法正常引用CsvItemExporter类，应改为：from scrapy.exporters import CsvItemExporter
+3.注意新版本的CsvItemExporter类已加入newline=''用于去除csv文件的空行
+
+2019/3/9
+关于docker
+详细过程查看毕设文件夹里的docker脑图
+搜索镜像：docker search tomcat
+按条件搜索镜像：docker search  -s 30 tomcat
+删除镜像：docker rmi -f
+批量删除镜像：docker rmi -f $(docker images -q)
+
+下载CentOS镜像：docker pull centos
+交互式启动CentOS：docker run -it centos
+后台启动：-d
+
+2019/3/10
+关于docker
+创建以CentOS为基础的镜像
+docker build -f /usr/scrapyBS/Dockerfile -t hjjcentos:1.2 .
+docker打包以CentOS为基础scrapy环境镜像打包成功
+scrapy环境镜像成功上传至阿里云
+阿里云ECS搭建docker环境
+scrapy镜像更新到1.2（数据库方面）
+
+2019/3/11
+修改qoutes的URL规则，启动时需在redis中输入：
+lpush qoutes:start_urls http://quotes.money.163.com/trade/lsjysj_zhishu_000002.html?year=2018&season=4
+创建extensions.py用于控制爬虫的等待时间
+创建scrapy2.2镜像，上传至阿里云
+
+2019/3/12
+搭建分布式mysql完成，两个服务器的数据库可以互相保存保证数据的一致性
+
+2019/3/13
+以python镜像为基础镜像创建scrapy2.3与scrapy2.3.1，其中scrapy2.3.1运行容器即可运行爬虫，使用Dockerfilepl与pl.txt。
+
+2019/3/16
+网页版K线图制作完成
