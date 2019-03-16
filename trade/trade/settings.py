@@ -55,12 +55,22 @@ DOWNLOAD_DELAY=0.20#设置爬取的间隔时间
 # See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 DOWNLOADER_MIDDLEWARES = {
    #'trade.middlewares.TradeDownloaderMiddleware': 543,
+    #启用随机的User-Agent，将爬虫模拟成真实的浏览器
     'trade.middlewares.RandomUserAgentMiddleware': 543,
+    #启用ip代理池防止ip大量访问导致ip被封
     'trade.middlewares.ProxyMiddleware': 544
 }
 
 # Enable or disable extensions
 # See https://doc.scrapy.org/en/latest/topics/extensions.html
+MYEXT_ENABLED=True      # 开启扩展
+IDLE_NUMBER=30           # 配置空闲持续时间单位为 60个 ，一个时间单位为5s
+
+# 在 EXTENSIONS 配置，激活扩展
+EXTENSIONS= {
+            'trade.extensions.RedisSpiderClosedExensions': 500,
+        }
+
 #EXTENSIONS = {
 #    'scrapy.extensions.telnet.TelnetConsole': None,
 #}
@@ -70,6 +80,7 @@ DOWNLOADER_MIDDLEWARES = {
 ITEM_PIPELINES = {
     'trade.pipelines.TradePipeline': 200,
     #'trade.pipelines.TocsvPipeline': 201,
+    #启用mysql项目管道
     'trade.pipelines.MysqlPipeline': 202,
     #'scrapy_redis.pipelines.RedisPipeline': 300
 }
@@ -110,6 +121,7 @@ MYSQL_PORT = 3306
 # BLOOMFILTER_HASH_NUMBER=6
 # BLOOMFILTER_BIT=30
 # REDIS_URL = 'redis://:123456@120.77.223.186:6379'
+#ip代理的地址
 PROXY_URL = 'http://localhost:5555/random'
 
 # #test1-setting
@@ -130,7 +142,6 @@ BLOOMFILTER_HASH_NUMBER = 6
 BLOOMFILTER_BIT = 10
 #设置保存指纹，本条设置十分重要，是保证爬取数据不重复的重要条件
 SCHEDULER_PERSIST=True
-
 
 
 

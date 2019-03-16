@@ -1,6 +1,9 @@
-FROM python:3.6
-ENV PATH /usr/local/bin:$PATH
-ADD . /code
-WORKDIR /code
-RUN pip3 install -r requirements.txt
-CMD scrapy crawl qoutes
+FROM centos
+MAINTAINER hjj<18287251710@163.com>
+ENV MYPATH /usr
+WORKDIR $MYPATH
+ADD . /usr/code
+RUN yum -y install vim
+RUN yum -y install net-tools
+ 
+CMD /bin/bash

@@ -1,5 +1,0 @@
-Scrapy
-PyMySQL
-scrapy-redis
-scrapy-redis-bloomfilter
-requests

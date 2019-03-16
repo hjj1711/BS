@@ -11,7 +11,8 @@ import scrapy
 class TradeItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
-    table='qoutes'#定义mysql存储的表名称
+    # 定义mysql存储的表名称
+    table='qoutes'
     date=scrapy.Field()#日期
     OP = scrapy.Field()#开盘价
     HP = scrapy.Field()#最高价
