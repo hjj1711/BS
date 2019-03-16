@@ -1,0 +1,7 @@
+FROM python:3.6
+MAINTAINER hjj<18287251710@163.com>
+ENV PATH /usr/local/bin:$PATH
+COPY . /code
+WORKDIR /code
+RUN pip3 install -r pl.txt
+CMD /bin/bash
