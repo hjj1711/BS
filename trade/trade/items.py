@@ -13,7 +13,7 @@ class TradeItem(scrapy.Item):
     # name = scrapy.Field()
     # 定义mysql存储的表名称
     table='qoutes'
-    date=scrapy.Field()#日期
+    times=scrapy.Field()#日期
     OP = scrapy.Field()#开盘价
     HP = scrapy.Field()#最高价
     LP = scrapy.Field()#最低价

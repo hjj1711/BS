@@ -41,7 +41,7 @@ class ZhishuaSpider(RedisSpider):
         #将解析的结果赋值给item
         for item_node in item_nodes:
             item = TradeItem()
-            item['date'] = item_node.css('td:nth-child(1)::text').extract_first()
+            item['times'] = item_node.css('td:nth-child(1)::text').extract_first()
             item['OP'] = item_node.css('td:nth-child(2)::text').extract_first()
             item['HP'] = item_node.css('td:nth-child(3)::text').extract_first()
             item['LP'] = item_node.css('td:nth-child(4)::text').extract_first()

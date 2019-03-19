@@ -68,7 +68,7 @@ class TocsvPipeline(object):
         self.file.close()
 
     def process_item(self, item, spider):
-        if item['date']:
+        if item['times']:
             self.exporter.export_item(item)
         return item
 
@@ -100,8 +100,8 @@ class MysqlPipeline():
         self.db.close()
 
     def process_item(self, item, spider):
-        print(item['date'])
-        if item['date']:
+        print(item['times'])
+        if item['times']:
             data = dict(item)
             keys = ', '.join(data.keys())
             values = ', '.join(['%s'] * len(data))

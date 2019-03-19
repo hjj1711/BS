@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" serverName="scrapy">
+  <component name="PublishConfigData" serverName="scrapy" uploadOnCheckin="a42aaadb-9f19-4782-9f11-06f9b0f6bdc9">
     <serverData>
       <paths name="scrapy">
         <serverdata>
@@ -10,5 +10,6 @@
         </serverdata>
       </paths>
     </serverData>
+    <option name="myUploadOnCheckinName" value="scrapy" />
   </component>
 </project>
