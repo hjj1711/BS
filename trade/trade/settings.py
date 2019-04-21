@@ -65,8 +65,8 @@ ROBOTSTXT_OBEY = False
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-   #'trade.pipelines.TradePipeline': 300,
-    'trade.pipelines.TocsvPipeline': 300
+    'trade.pipelines.TradePipeline': 300,
+    'trade.pipelines.TocsvPipeline': 301
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
